@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre el Projecte - MultiConvert</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <nav class="bg-white shadow-sm py-4 px-6 flex justify-between items-center">
+        <a href="../index.html" class="text-2xl font-bold text-blue-600">MultiConvert</a>
+        <div class="space-x-6">
+            <a href="../index.html" class="hover:text-blue-600 transition">Inici</a>
+            <a href="convertidor-docx.html" class="hover:text-blue-600 transition">DOCX 2 MD</a>
+            <a href="convertidor-imatges.html" class="hover:text-blue-600 transition">Imatges</a>
+            <a href="convertidor-pdf.html" class="hover:text-blue-600 transition">PDF 2 Word</a>
+            <a href="about.html" class="text-blue-600 font-medium">Sobre el projecte</a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto py-20 px-6">
+        <div class="text-center mb-16">
+            <h1 class="text-4xl font-extrabold mb-4">Sobre MultiConvert</h1>
+            <p class="text-xl text-gray-600">Una eina pensada per a la privacitat i l'eficiència.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-2xl font-bold mb-4 text-blue-600">Què és MultiConvert?</h2>
+                <p class="text-gray-600 mb-4 leading-relaxed">
+                    MultiConvert és un projecte de codi obert creat per oferir una alternativa gratuïta i segura als convertidors de fitxers en línia. Molts serveis actuals requereixen que pugis el teu fitxer a un servidor remot, cosa que pot posar en risc la teva privacitat.
+                </p>
+                <p class="text-gray-600 mb-6 leading-relaxed">
+                    Aquesta eina processa tot <strong>directament al teu navegador</strong>. Això significa que els teus documents mai deixen el teu ordinador.
+                </p>
+                <a href="https://github.com/miquelmarques/docx_2_md" target="_blank" class="inline-block bg-gray-800 text-white px-6 py-2 rounded-md hover:bg-gray-900 transition">Visitar Repositori GitHub</a>
+            </div>
+            <div class="bg-blue-50 p-8 rounded-2xl border border-blue-100">
+                <h3 class="text-xl font-bold mb-4">Tecnologies clau</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-2">
+                        <span class="text-blue-500">✔</span> <strong>Mammoth.js</strong> per a DOCX
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <span class="text-blue-500">✔</span> <strong>Turndown</strong> per a Markdown
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <span class="text-blue-500">✔</span> <strong>PDF.js</strong> per a anàlisi de PDF
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <span class="text-blue-500">✔</span> <strong>Tailwind CSS</strong> per al disseny
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-10 text-center text-gray-500 text-sm">
+        &copy; 2026 MultiConvert - Creat per a la comunitat.
+    </footer>
+</body>
+</html>
