@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF <-> Word - MultiConvert</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- DOCX to HTML -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <!-- HTML to PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- PDF to Text -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- Text to DOCX -->
+    <script src="https://unpkg.com/docx@8.5.0/build/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <nav class="bg-white shadow-sm py-4 px-6 flex justify-between items-center">
+        <a href="index.html" class="text-2xl font-bold text-blue-600">MultiConvert</a>
+        <div class="space-x-6">
+            <a href="index.html" class="hover:text-blue-600 transition">Inici</a>
+            <a href="convertidor-docx.html" class="hover:text-blue-600 transition">DOCX 2 MD</a>
+            <a href="convertidor-imatges.html" class="hover:text-blue-600 transition">Imatges</a>
+            <a href="convertidor-pdf.html" class="text-blue-600 font-medium">PDF <-> Word</a>
+        </div>
+    </nav>
+
+    <main class="max-w-3xl mx-auto py-12 px-4">
+        <h1 class="text-3xl font-bold mb-6 text-center">Conversió PDF <-> Word</h1>
+        
+        <div class="bg-white shadow-md rounded-lg p-8">
+            <div class="flex justify-center mb-8">
+                <div class="inline-flex rounded-md shadow-sm" role="group">
+                    <button type="button" id="tab-w2p" onclick="switchTab('w2p')" class="px-4 py-2 text-sm font-medium text-blue-700 bg-white border border-gray-200 rounded-l-lg">Word 2 PDF</button>
+                    <button type="button" id="tab-p2w" onclick="switchTab('p2w')" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-lg">PDF 2 Word</button>
+                </div>
+            </div>
+
+            <!-- Word to PDF UI -->
+            <div id="ui-w2p" class="flex flex-col items-center gap-4">
+                <p class="text-sm text-gray-500 mb-4 text-center">El fitxer Word es convertirà a HTML i després s'imprimirà en PDF.</p>
+                <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Puja el teu fitxer</span> .docx</p>
+                    </div>
+                    <input type="file" id="docxInput" class="hidden" accept=".docx" onchange="convertWordToPdf(event)" />
+                </label>
+                <div id="w2p-status" class="text-blue-600 font-medium hidden">Processant... Espera un moment.</div>
+            </div>
+
+            <!-- PDF to Word UI -->
+            <div id="ui-p2w" class="hidden flex flex-col items-center gap-4">
+                <p class="text-sm text-gray-500 mb-4 text-center">S'extreurà el text del PDF i es crearà un document Word nou. <br><b>Nota:</b> No es manté el layout original.</p>
+                <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Puja el teu fitxer</span> .pdf</p>
+                    </div>
+                    <input type="file" id="pdfInput" class="hidden" accept=".pdf" onchange="convertPdfToWord(event)" />
+                </label>
+                <div id="p2w-status" class="text-blue-600 font-medium hidden">Extreient text... Espera un moment.</div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/script-pdf.js"></script>
+</body>
+</html>

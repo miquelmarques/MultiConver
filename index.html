@@ -1,166 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ca">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOCX to Markdown Converter</title>
+    <title>MultiConvert - Eines de Conversió Gratuïtes</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Mammoth.js for DOCX -> HTML -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
-    <!-- Turndown for HTML -> Markdown -->
-    <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
-    <!-- Turndown GFM Plugin for Tables support -->
-    <script src="https://unpkg.com/turndown-plugin-gfm/dist/turndown-plugin-gfm.js"></script>
-    <style>
-        .editor-box {
-            min-height: 200px;
-            border: 2px dashed #d1d5db;
-            padding: 1rem;
-            background-color: #f9fafb;
-            border-radius: 0.5rem;
-            overflow-y: auto;
-        }
-        .editor-box:focus {
-            outline: none;
-            border-color: #3b82f6;
-            background-color: #fff;
-        }
-    </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col items-center py-12 px-4">
-    <div class="max-w-3xl w-full bg-white shadow-md rounded-lg p-8">
-        <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">DOCX to Markdown</h1>
-        <p class="text-center text-gray-600 mb-8">Instant browser-based conversion. Your files never leave your computer.</p>
-        
-        <div class="flex justify-center mb-8">
-            <div class="inline-flex rounded-md shadow-sm" role="group">
-                <button type="button" id="tab-file" onclick="switchTab('file')" class="px-4 py-2 text-sm font-medium text-blue-700 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100">
-                    Upload File
-                </button>
-                <button type="button" id="tab-paste" onclick="switchTab('paste')" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-lg hover:bg-gray-100">
-                    Paste Content
-                </button>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm py-4 px-6 flex justify-between items-center">
+        <div class="text-2xl font-bold text-blue-600">MultiConvert</div>
+        <div class="space-x-6">
+            <a href="index.html" class="text-blue-600 font-medium">Inici</a>
+            <a href="convertidor-docx.html" class="hover:text-blue-600 transition">DOCX 2 MD</a>
+            <a href="convertidor-imatges.html" class="hover:text-blue-600 transition">Imatges</a>
+            <a href="convertidor-pdf.html" class="hover:text-blue-600 transition">PDF <-> Word</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="max-w-5xl mx-auto py-20 px-6 text-center">
+        <h1 class="text-5xl font-extrabold mb-6 leading-tight">Converteix els teus fitxers <br><span class="text-blue-600">de forma instantània i privada</span></h1>
+        <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+            Una suite d'eines gratuïtes que funcionen directament al teu navegador. Els teus fitxers mai surten del teu ordinador, garantint una privacitat total.
+        </p>
+        <div class="flex justify-center flex-wrap gap-4">
+            <a href="convertidor-docx.html" class="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition shadow-lg">Convertir DOCX 2 MD</a>
+            <a href="convertidor-imatges.html" class="bg-white text-blue-600 border border-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition shadow-sm">Convertir Imatges</a>
+            <a href="convertidor-pdf.html" class="bg-white text-blue-600 border border-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition shadow-sm">PDF <-> Word</a>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="bg-white py-20 px-6">
+        <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-12 text-center">
+            <div class="p-6">
+                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600 text-2xl">🔒</div>
+                <h3 class="text-xl font-bold mb-2">Privacitat Total</h3>
+                <p class="text-gray-600">Tot el processament es fa al client. No pujem cap fitxer al servidor.</p>
+            </div>
+            <div class="p-6">
+                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600 text-2xl">⚡</div>
+                <h3 class="text-xl font-bold mb-2">Velocitat Instantània</h3>
+                <p class="text-gray-600">Sense cues ni temps d'espera. Converteix i descarrega al moment.</p>
+            </div>
+            <div class="p-6">
+                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600 text-2xl">🌍</div>
+                <h3 class="text-xl font-bold mb-2">100% Gratuït</h3>
+                <p class="text-gray-600">Sense registres, sense subscripcions i sense límits de fitxers.</p>
             </div>
         </div>
+    </section>
 
-        <!-- File Upload UI -->
-        <div id="ui-file" class="flex flex-col items-center gap-4">
-            <div class="flex items-center justify-center w-full">
-                <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                        <svg class="w-8 h-8 mb-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> .docx file</p>
-                    </div>
-                    <input type="file" id="fileInput" class="hidden" accept=".docx" onchange="handleFileUpload(event)" />
-                </label>
-            </div>
-        </div>
-
-        <!-- Paste Content UI -->
-        <div id="ui-paste" class="hidden flex flex-col items-center gap-4">
-            <div class="w-full">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Paste your Word content here:</label>
-                <div id="paste-area" contenteditable="true" class="editor-box" placeholder="Paste here..."></div>
-            </div>
-            <button onclick="convertPastedText()" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition font-medium">
-                Convert Pasted Text
-            </button>
-        </div>
-
-        <!-- Result Area -->
-        <div id="result-container" class="mt-10 hidden">
-            <h2 class="text-xl font-semibold mb-4 text-gray-700">Result:</h2>
-            <div class="relative">
-                <textarea id="resultArea" class="w-full h-96 p-4 border border-gray-300 rounded-md font-mono text-sm bg-gray-50" readonly></textarea>
-                <button onclick="copyToClipboard()" class="absolute top-2 right-2 bg-gray-200 text-gray-700 px-3 py-1 rounded text-xs hover:bg-gray-300 transition">
-                    Copy
-                </button>
-            </div>
-            <div class="mt-4 flex justify-end">
-                <button onclick="resetPage()" class="text-blue-600 hover:underline text-sm">Start Over</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Initialize Turndown with GFM (GitHub Flavored Markdown) for tables
-        const turndownService = new TurndownService({ 
-            headingStyle: 'atx',
-            hr: '---',
-            bulletListMarker: '-'
-        });
-        const gfm = turndownPluginGfm.gfm;
-        turndownService.use(gfm);
-
-        function switchTab(tab) {
-            const uiFile = document.getElementById('ui-file');
-            const uiPaste = document.getElementById('ui-paste');
-            const tabFile = document.getElementById('tab-file');
-            const tabPaste = document.getElementById('tab-paste');
-
-            if (tab === 'file') {
-                uiFile.classList.remove('hidden');
-                uiPaste.classList.add('hidden');
-                tabFile.classList.add('text-blue-700', 'bg-white');
-                tabPaste.classList.remove('text-blue-700', 'bg-white');
-            } else {
-                uiFile.classList.add('hidden');
-                uiPaste.classList.remove('hidden');
-                tabPaste.classList.add('text-blue-700', 'bg-white');
-                tabFile.classList.remove('text-blue-700', 'bg-white');
-            }
-        }
-
-        async function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = async function(e) {
-                const arrayBuffer = e.target.result;
-                try {
-                    // Convert DOCX to HTML
-                    const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
-                    const html = result.value;
-                    
-                    // Convert HTML to Markdown
-                    const markdown = turndownService.turndown(html);
-                    showResult(markdown);
-                } catch (err) {
-                    alert("Error converting file: " + err.message);
-                }
-            };
-            reader.readAsArrayBuffer(file);
-        }
-
-        function convertPastedText() {
-            const pasteArea = document.getElementById('paste-area');
-            const html = pasteArea.innerHTML;
-            if (!html) return alert("Please paste some content first.");
-            
-            const markdown = turndownService.turndown(html);
-            showResult(markdown);
-        }
-
-        function showResult(markdown) {
-            document.getElementById('result-container').classList.remove('hidden');
-            document.getElementById('resultArea').value = markdown;
-            document.getElementById('ui-file').classList.add('hidden');
-            document.getElementById('ui-paste').classList.add('hidden');
-            document.getElementById('tab-file').classList.add('hidden');
-            document.getElementById('tab-paste').classList.add('hidden');
-        }
-
-        function resetPage() {
-            location.reload();
-        }
-
-        function copyToClipboard() {
-            const copyText = document.getElementById("resultArea");
-            copyText.select();
-            navigator.clipboard.writeText(copyText.value);
-            alert("Copied to clipboard!");
-        }
-    </script>
+    <footer class="py-10 text-center text-gray-500 text-sm">
+        &copy; 2026 MultiConvert - Creat per a la comunitat.
+    </footer>
 </body>
 </html>
